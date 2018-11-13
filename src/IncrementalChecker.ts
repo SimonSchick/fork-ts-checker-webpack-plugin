@@ -1,5 +1,4 @@
 import * as fs from 'fs';
-import endsWith = require('lodash/endsWith');
 import * as path from 'path';
 import * as ts from 'typescript';
 import { Configuration, Linter } from 'tslint'; // Imported for types alone; actual requires take place in methods below
@@ -151,7 +150,7 @@ export class IncrementalChecker {
     linterExclusions: minimatch.IMinimatch[]
   ): boolean {
     return (
-      endsWith(filePath, '.d.ts') ||
+      filePath.endsWith('.d.ts') ||
       linterExclusions.some(matcher => matcher.match(filePath))
     );
   }

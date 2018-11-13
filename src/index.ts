@@ -6,8 +6,6 @@ import * as fs from 'fs';
 import * as micromatch from 'micromatch';
 import * as os from 'os';
 import * as webpack from 'webpack';
-import isString = require('lodash/isString');
-import isFunction = require('lodash/isFunction');
 import { CancellationToken } from './CancellationToken';
 import { NormalizedMessage } from './NormalizedMessage';
 import { createDefaultFormatter } from './formatter/defaultFormatter';
@@ -131,7 +129,7 @@ class ForkTsCheckerWebpackPlugin {
         : options.tslint
       : undefined;
     this.tslintAutoFix = options.tslintAutoFix || false;
-    this.watch = isString(options.watch)
+    this.watch = typeof options.watch === 'string'
       ? [options.watch]
       : options.watch || [];
     this.ignoreDiagnostics = options.ignoreDiagnostics || [];
@@ -147,7 +145,7 @@ class ForkTsCheckerWebpackPlugin {
     this.useColors = options.colors !== false; // default true
     this.colors = new chalk.constructor({ enabled: this.useColors });
     this.formatter =
-      options.formatter && isFunction(options.formatter)
+      options.formatter && typeof options.formatter === 'function'
         ? options.formatter
         : ForkTsCheckerWebpackPlugin.createFormatter(
             (options.formatter as 'default' | 'codeframe') || 'default',
